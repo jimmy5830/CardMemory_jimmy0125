@@ -1,8 +1,8 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
-    - GameControl1
-    - MainFront1
+    - GameControl2
+    - MainFront2
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.Animation.Runtime.dll:
@@ -84,7 +84,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
   methodsToPreserve: []
   sceneClasses:
-    Assets/Scenes/Stage1.unity:
+    Assets/Scenes/Stage2.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -118,7 +118,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 28802}
     - Class: 114
-      Script: {instanceID: 31196}
+      Script: {instanceID: 30252}
     - Class: 114
       Script: {instanceID: 31502}
     - Class: 114
@@ -128,7 +128,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 32798}
     - Class: 114
-      Script: {instanceID: 33162}
+      Script: {instanceID: 33990}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1146,5 +1146,5 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   platform: 2
   scenePathNames:
-  - Assets/Scenes/Stage1.unity
-  playerPath: /Users/jimyee/Documents/GitHub/Gamespring_CardMemory/CardMemory/Stage1.app
+  - Assets/Scenes/Stage2.unity
+  playerPath: /Users/jimyee/Documents/GitHub/Gamespring_CardMemory/CardMemory/Stage2.app

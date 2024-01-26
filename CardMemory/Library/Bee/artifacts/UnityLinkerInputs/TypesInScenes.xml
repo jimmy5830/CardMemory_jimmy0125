@@ -1,7 +1,7 @@
 <linker>
 	<assembly fullname="Assembly-CSharp">
-		<type fullname="GameControl1" preserve="nothing"/>
-		<type fullname="MainFront1" preserve="nothing"/>
+		<type fullname="GameControl2" preserve="nothing"/>
+		<type fullname="MainFront2" preserve="nothing"/>
 	</assembly>
 	<assembly fullname="Unity.2D.Animation.Runtime">
 		<type fullname="UnityEngine.U2D.Animation.BufferManager" preserve="nothing"/>
