@@ -22,7 +22,7 @@ public class GameControl2 : MonoBehaviour
         float xPosition = -2.2f;
 
         // 3번 반복하여 토큰을 생성하고 배치
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 7; i++)
         {
             // faceIndexes 리스트에서 랜덤한 인덱스를 얻기 위한 난수 생성
             shuffleNum = rnd.Next(0, (faceIndexes.Count));
