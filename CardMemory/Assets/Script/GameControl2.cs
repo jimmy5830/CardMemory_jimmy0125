@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameControl2 : MonoBehaviour
 {
@@ -9,6 +11,12 @@ public class GameControl2 : MonoBehaviour
     public static System.Random rnd = new System.Random();
     public int shuffleNum = 0;
     int[] visibleFaces = { -1, -2 };
+
+    public float gameTime = 60.0f; // 초기 시간 설정
+    bool gameFailed = false;
+
+    public int totalMatches = 4;
+    private int currentMatches = 0;
 
     void Start()
     {
@@ -94,14 +102,20 @@ public class GameControl2 : MonoBehaviour
             visibleFaces[0] = -1;
             visibleFaces[1] = -2;
             success = true;
-            // move to next stage
+            currentMatches++;
 
-            /*if (Scene.name == "Stage1")
+            // 모든 조합이 일치하였는지 확인
+            if (currentMatches == totalMatches)
             {
-                SceneManager.LoadScene("Stage2");
-            }*/
+                MoveToNextStage();
+            }
         }
         return success;
+    }
+
+    private void MoveToNextStage()
+    {
+        SceneManager.LoadScene("Stage3");
     }
 
     private void Awake()

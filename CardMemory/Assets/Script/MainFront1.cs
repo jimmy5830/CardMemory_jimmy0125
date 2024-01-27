@@ -5,15 +5,17 @@ using UnityEngine;
 public class MainFront1 : MonoBehaviour
 {
     public GameObject gameControl;
-    SpriteRenderer spriteRenderer;
+    SpriteRenderer spriteRenderer; // 카드의 이미지 변경
     public Sprite[] faces;
     public Sprite back;
-    public int faceIndex;
+    public int faceIndex; // 어떤 이미지를 사용할지 결정
     public bool matched = false;
 
     public GameControl1 control;
 
-    public void OnMouseDown()
+    
+
+    public void OnMouseDown() // 마우스 클릭 메소드
     {
         if (matched == false)
         {
@@ -36,7 +38,6 @@ public class MainFront1 : MonoBehaviour
 
     private void Awake()
     {
-        //gameControl = GameObject.Find("GameControl1");
         control = gameControl.GetComponent<GameControl1>();
 
         if (control == null)
@@ -45,4 +46,7 @@ public class MainFront1 : MonoBehaviour
         }
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
+
+    // 이미지를 랜덤으로 선택하고 표시하는 메서드
+    
 }

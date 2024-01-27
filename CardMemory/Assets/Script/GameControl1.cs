@@ -1,17 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement; 
 
 public class GameControl1 : MonoBehaviour
 {
+    public ScoreControl scoreControl;
+
     GameObject token;
     List<int> faceIndexes = new List<int> { 0, 1, 0, 1};
     public static System.Random rnd = new System.Random();
     public int shuffleNum = 0;
     int[] visibleFaces = { -1, -2 };
 
+    public float gameTime = 60.0f; // 초기 시간 설정
+    bool gameFailed = false;
+
+    public int totalMatches = 2;
+    private int currentMatches = 0;
+    public Text resetCountText; // 카운트 점수 표시 Text
+
+    private int resetCount = 0; // 카운트 세기
+
+    
+    
+    // 이미지들을 담을 배열
+
+
+
     void Start()
-    {
+    {       
+
         // faceIndexes 리스트의 초기 길이를 저장
         int originalLength = faceIndexes.Count;
 
@@ -49,11 +69,13 @@ public class GameControl1 : MonoBehaviour
 
         // 마지막 토큰에 남은 faceIndex를 할당
         token.GetComponent<MainFront1>().faceIndex = faceIndexes[0];
+
+        
     }
-
-
+        
     public bool TwoCardsUp()
     {
+        // 현재 두 장의 카드가 앞면을 향하고 있는지 확인
         bool cardsUp = false;
         if (visibleFaces[0] >= 0 && visibleFaces[1] >= 0)
         {
@@ -64,6 +86,7 @@ public class GameControl1 : MonoBehaviour
 
     public void AddVisibleFace(int index)
     {
+        // 현재 보이는 앞면 목록에 카드의 인덱스를 추가
         if (visibleFaces[0] == -1)
         {
             visibleFaces[0] = index;
@@ -76,6 +99,7 @@ public class GameControl1 : MonoBehaviour
 
     public void RemoveVisibleFace(int index)
     {
+        // 현재 보이는 앞면 목록에서 카드의 인덱스를 제거
         if (visibleFaces[0] == index)
         {
             visibleFaces[0] = -1;
@@ -84,9 +108,14 @@ public class GameControl1 : MonoBehaviour
         {
             visibleFaces[1] = -2;
         }
+
+        if (scoreControl != null)
+        {
+            scoreControl.IncrementResetCount(); // scroeControl 코드에 점수를 추가
+        }
     }
 
-    public bool CheckMatch()
+    public bool CheckMatch() // 조합이 일치하는 체크하는 메소드
     {
         bool success = false;
         if (visibleFaces[0] == visibleFaces[1])
@@ -94,14 +123,20 @@ public class GameControl1 : MonoBehaviour
             visibleFaces[0] = -1;
             visibleFaces[1] = -2;
             success = true;
-            // move to next stage
+            currentMatches++;
 
-            /*if (Scene.name == "Stage1")
+            // 모든 조합이 일치하였는지 확인
+            if (currentMatches == totalMatches)
             {
-                SceneManager.LoadScene("Stage2");
-            }*/
+                MoveToNextStage();
+            }
         }
         return success;
+    }
+
+    private void MoveToNextStage()
+    {
+        SceneManager.LoadScene("Stage2");
     }
 
     private void Awake()
