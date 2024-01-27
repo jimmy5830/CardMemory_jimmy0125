@@ -903,6 +903,18 @@ PrefabInstance:
       propertyPath: gameControl
       value: 
       objectReference: {fileID: 1286961731}
+    - target: {fileID: 1480669334746438118, guid: 81bdaf48f84554560929c734b119822b, type: 3}
+      propertyPath: faces.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1480669334746438118, guid: 81bdaf48f84554560929c734b119822b, type: 3}
+      propertyPath: 'faces.Array.data[4]'
+      value: 
+      objectReference: {fileID: 21300080, guid: 3924dd0449c173e4aa69d07bdb73d5ed, type: 3}
+    - target: {fileID: 1480669334746438118, guid: 81bdaf48f84554560929c734b119822b, type: 3}
+      propertyPath: 'faces.Array.data[5]'
+      value: 
+      objectReference: {fileID: 21300082, guid: 3924dd0449c173e4aa69d07bdb73d5ed, type: 3}
     - target: {fileID: 5600607307564959393, guid: 81bdaf48f84554560929c734b119822b, type: 3}
       propertyPath: m_Name
       value: Token2

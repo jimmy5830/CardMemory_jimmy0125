@@ -19,10 +19,10 @@ public class GameControl3 : MonoBehaviour
         float yPosition = 2.3f;
 
         // 토큰의 초기 x 위치
-        float xPosition = -7.2f;
+        float xPosition = -6.2f;
 
         // 3번 반복하여 토큰을 생성하고 배치
-        for (int i = 0; i < 17; i++)
+        for (int i = 0; i < 18; i++)
         {
             // faceIndexes 리스트에서 랜덤한 인덱스를 얻기 위한 난수 생성
             shuffleNum = rnd.Next(0, (faceIndexes.Count));
@@ -37,19 +37,19 @@ public class GameControl3 : MonoBehaviour
             faceIndexes.Remove(faceIndexes[shuffleNum]);
 
             // xPosition 값을 증가하여 토큰을 가로로 이동
-            xPosition = xPosition + 3;
+            xPosition = xPosition + 2.5f;
 
             // originalLength의 절반까지 반복하면 y 위치를 변경하여 세로로 이동
-            if (i == 4)
+            if (i == 5)
             {
                 yPosition = 0f;
-                xPosition = -7.2f;
+                xPosition = -6.2f;
             }
 
-            else if (i == 10)
+            else if (i == 11)
             {
                 yPosition = -2.3f;
-                xPosition = -7.2f;
+                xPosition = -6.2f;
             }
         }
 
