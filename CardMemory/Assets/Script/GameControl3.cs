@@ -19,7 +19,7 @@ public class GameControl3 : MonoBehaviour
         float yPosition = 2.3f;
 
         // 토큰의 초기 x 위치
-        float xPosition = -2.2f;
+        float xPosition = -7.2f;
 
         // 3번 반복하여 토큰을 생성하고 배치
         for (int i = 0; i < 17; i++)
@@ -31,30 +31,30 @@ public class GameControl3 : MonoBehaviour
             var temp = Instantiate(token, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
 
             // MainFront1 스크립트의 faceIndex 속성을 설정
-            temp.GetComponent<MainFront1>().faceIndex = faceIndexes[shuffleNum];
+            temp.GetComponent<MainFront3>().faceIndex = faceIndexes[shuffleNum];
 
             // 이미 사용된 faceIndex를 제거하여 중복 사용을 방지
             faceIndexes.Remove(faceIndexes[shuffleNum]);
 
             // xPosition 값을 증가하여 토큰을 가로로 이동
-            xPosition = xPosition + 4;
+            xPosition = xPosition + 3;
 
             // originalLength의 절반까지 반복하면 y 위치를 변경하여 세로로 이동
-            if (i == 5)
+            if (i == 4)
             {
                 yPosition = 0f;
-                xPosition = -6.2f;
+                xPosition = -7.2f;
             }
 
-            else if (i == 11)
+            else if (i == 10)
             {
                 yPosition = -2.3f;
-                xPosition = -6.2f;
+                xPosition = -7.2f;
             }
         }
 
         // 마지막 토큰에 남은 faceIndex를 할당
-        token.GetComponent<MainFront1>().faceIndex = faceIndexes[0];
+        token.GetComponent<MainFront3>().faceIndex = faceIndexes[0];
     }
 
 
@@ -112,6 +112,6 @@ public class GameControl3 : MonoBehaviour
 
     private void Awake()
     {
-        token = GameObject.Find("Token");
+        token = GameObject.Find("Token3");
     }
 }
