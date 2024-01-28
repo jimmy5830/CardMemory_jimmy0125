@@ -13,7 +13,6 @@ public class MainFront1 : MonoBehaviour
 
     public GameControl1 control;
 
-    
 
     public void OnMouseDown() // 마우스 클릭 메소드
     {
@@ -48,5 +47,4 @@ public class MainFront1 : MonoBehaviour
     }
 
     // 이미지를 랜덤으로 선택하고 표시하는 메서드
-    
 }

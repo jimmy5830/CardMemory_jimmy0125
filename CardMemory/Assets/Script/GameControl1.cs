@@ -2,64 +2,65 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement; 
+using UnityEngine.SceneManagement;
 
 public class GameControl1 : MonoBehaviour
 {
     public ScoreControl scoreControl;
 
     GameObject token;
-    List<int> faceIndexes = new List<int> { 0, 1, 0, 1};
+    List<int> faceIndexes = new List<int> { 0, 1, 0, 1 };
     public static System.Random rnd = new System.Random();
     public int shuffleNum = 0;
     int[] visibleFaces = { -1, -2 };
 
-    public float gameTime = 60.0f; // ì´ˆê¸° ì‹œê°„ ì„¤ì •
+    public float gameTime = 60.0f; // ÃÊ±â ½Ã°£ ¼³Á¤
     bool gameFailed = false;
 
     public int totalMatches = 2;
     private int currentMatches = 0;
-    public Text resetCountText; // ì¹´ìš´íŠ¸ ì ìˆ˜ í‘œì‹œ Text
+    public Text resetCountText; // Ä«¿îÆ® Á¡¼ö Ç¥½Ã Text
+    public Text finalCountText; // ÃÖÁ¾ Á¡¼ö Ç¥½Ã TExt
 
-    private int resetCount = 0; // ì¹´ìš´íŠ¸ ì„¸ê¸°
+    private int resetCount = 0; // Ä«¿îÆ® ¼¼±â
 
-    
-    
-    // ì´ë¯¸ì§€ë“¤ì„ ë‹´ì„ ë°°ì—´
+
+
+    // ÀÌ¹ÌÁöµéÀ» ´ãÀ» ¹è¿­
 
 
 
     void Start()
-    {       
+    {
 
-        // faceIndexes ë¦¬ìŠ¤íŠ¸ì˜ ì´ˆê¸° ê¸¸ì´ë¥¼ ì €ì¥
+        // faceIndexes ¸®½ºÆ®ÀÇ ÃÊ±â ±æÀÌ¸¦ ÀúÀå
         int originalLength = faceIndexes.Count;
 
-        // í† í°ì˜ ì´ˆê¸° y ìœ„ì¹˜
+        // ÅäÅ«ÀÇ ÃÊ±â y À§Ä¡
         float yPosition = 2.3f;
 
-        // í† í°ì˜ ì´ˆê¸° x ìœ„ì¹˜
+        // ÅäÅ«ÀÇ ÃÊ±â x À§Ä¡
         float xPosition = -2.2f;
 
-        // 3ë²ˆ ë°˜ë³µí•˜ì—¬ í† í°ì„ ìƒì„±í•˜ê³  ë°°ì¹˜
+        // 3¹ø ¹İº¹ÇÏ¿© ÅäÅ«À» »ı¼ºÇÏ°í ¹èÄ¡
         for (int i = 0; i < 3; i++)
         {
-            // faceIndexes ë¦¬ìŠ¤íŠ¸ì—ì„œ ëœë¤í•œ ì¸ë±ìŠ¤ë¥¼ ì–»ê¸° ìœ„í•œ ë‚œìˆ˜ ìƒì„±
+            // faceIndexes ¸®½ºÆ®¿¡¼­ ·£´ıÇÑ ÀÎµ¦½º¸¦ ¾ò±â À§ÇÑ ³­¼ö »ı¼º
             shuffleNum = rnd.Next(0, (faceIndexes.Count));
 
-            // ìƒˆë¡œìš´ í† í°ì„ ìƒì„±í•˜ê³  ìœ„ì¹˜ë¥¼ ì„¤ì •
+            // »õ·Î¿î ÅäÅ«À» »ı¼ºÇÏ°í À§Ä¡¸¦ ¼³Á¤
             var temp = Instantiate(token, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
 
-            // MainFront1 ìŠ¤í¬ë¦½íŠ¸ì˜ faceIndex ì†ì„±ì„ ì„¤ì •
+            // MainFront1 ½ºÅ©¸³Æ®ÀÇ faceIndex ¼Ó¼ºÀ» ¼³Á¤
             temp.GetComponent<MainFront1>().faceIndex = faceIndexes[shuffleNum];
 
-            // ì´ë¯¸ ì‚¬ìš©ëœ faceIndexë¥¼ ì œê±°í•˜ì—¬ ì¤‘ë³µ ì‚¬ìš©ì„ ë°©ì§€
+            // ÀÌ¹Ì »ç¿ëµÈ faceIndex¸¦ Á¦°ÅÇÏ¿© Áßº¹ »ç¿ëÀ» ¹æÁö
             faceIndexes.Remove(faceIndexes[shuffleNum]);
 
-            // xPosition ê°’ì„ ì¦ê°€í•˜ì—¬ í† í°ì„ ê°€ë¡œë¡œ ì´ë™
+            // xPosition °ªÀ» Áõ°¡ÇÏ¿© ÅäÅ«À» °¡·Î·Î ÀÌµ¿
             xPosition = xPosition + 4;
 
-            // originalLengthì˜ ì ˆë°˜ê¹Œì§€ ë°˜ë³µí•˜ë©´ y ìœ„ì¹˜ë¥¼ ë³€ê²½í•˜ì—¬ ì„¸ë¡œë¡œ ì´ë™
+            // originalLengthÀÇ Àı¹İ±îÁö ¹İº¹ÇÏ¸é y À§Ä¡¸¦ º¯°æÇÏ¿© ¼¼·Î·Î ÀÌµ¿
             if (i == (originalLength / 2 - 2))
             {
                 yPosition = -2.3f;
@@ -67,15 +68,17 @@ public class GameControl1 : MonoBehaviour
             }
         }
 
-        // ë§ˆì§€ë§‰ í† í°ì— ë‚¨ì€ faceIndexë¥¼ í• ë‹¹
+        
+
+        // ¸¶Áö¸· ÅäÅ«¿¡ ³²Àº faceIndex¸¦ ÇÒ´ç
         token.GetComponent<MainFront1>().faceIndex = faceIndexes[0];
 
-        
+
     }
-        
+
     public bool TwoCardsUp()
     {
-        // í˜„ì¬ ë‘ ì¥ì˜ ì¹´ë“œê°€ ì•ë©´ì„ í–¥í•˜ê³  ìˆëŠ”ì§€ í™•ì¸
+        // ÇöÀç µÎ ÀåÀÇ Ä«µå°¡ ¾Õ¸éÀ» ÇâÇÏ°í ÀÖ´ÂÁö È®ÀÎ
         bool cardsUp = false;
         if (visibleFaces[0] >= 0 && visibleFaces[1] >= 0)
         {
@@ -86,7 +89,7 @@ public class GameControl1 : MonoBehaviour
 
     public void AddVisibleFace(int index)
     {
-        // í˜„ì¬ ë³´ì´ëŠ” ì•ë©´ ëª©ë¡ì— ì¹´ë“œì˜ ì¸ë±ìŠ¤ë¥¼ ì¶”ê°€
+        // ÇöÀç º¸ÀÌ´Â ¾Õ¸é ¸ñ·Ï¿¡ Ä«µåÀÇ ÀÎµ¦½º¸¦ Ãß°¡
         if (visibleFaces[0] == -1)
         {
             visibleFaces[0] = index;
@@ -99,7 +102,7 @@ public class GameControl1 : MonoBehaviour
 
     public void RemoveVisibleFace(int index)
     {
-        // í˜„ì¬ ë³´ì´ëŠ” ì•ë©´ ëª©ë¡ì—ì„œ ì¹´ë“œì˜ ì¸ë±ìŠ¤ë¥¼ ì œê±°
+        // ÇöÀç º¸ÀÌ´Â ¾Õ¸é ¸ñ·Ï¿¡¼­ Ä«µåÀÇ ÀÎµ¦½º¸¦ Á¦°Å
         if (visibleFaces[0] == index)
         {
             visibleFaces[0] = -1;
@@ -111,11 +114,14 @@ public class GameControl1 : MonoBehaviour
 
         if (scoreControl != null)
         {
-            scoreControl.IncrementResetCount(); // scroeControl ì½”ë“œì— ì ìˆ˜ë¥¼ ì¶”ê°€
+            scoreControl.IncrementResetCount(); // scoreControl ÄÚµå¿¡ Á¡¼ö¸¦ Ãß°¡
+            scoreControl.IncrementFinalCount(); // final Á¡¼öµµ Ãß°¡
         }
+
+
     }
 
-    public bool CheckMatch() // ì¡°í•©ì´ ì¼ì¹˜í•˜ëŠ” ì²´í¬í•˜ëŠ” ë©”ì†Œë“œ
+    public bool CheckMatch() // Á¶ÇÕÀÌ ÀÏÄ¡ÇÏ´Â Ã¼Å©ÇÏ´Â ¸Ş¼Òµå
     {
         bool success = false;
         if (visibleFaces[0] == visibleFaces[1])
@@ -125,7 +131,7 @@ public class GameControl1 : MonoBehaviour
             success = true;
             currentMatches++;
 
-            // ëª¨ë“  ì¡°í•©ì´ ì¼ì¹˜í•˜ì˜€ëŠ”ì§€ í™•ì¸
+            // ¸ğµç Á¶ÇÕÀÌ ÀÏÄ¡ÇÏ¿´´ÂÁö È®ÀÎ
             if (currentMatches == totalMatches)
             {
                 MoveToNextStage();
@@ -139,9 +145,15 @@ public class GameControl1 : MonoBehaviour
         SceneManager.LoadScene("Stage2");
     }
 
+    /*public void GameEnded()
+    {
+        Debug.Log("Game Ended");
+    }*/
+
     private void Awake()
     {
         token = GameObject.Find("Token");
     }
 
+    
 }

@@ -3,51 +3,57 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameControl2 : MonoBehaviour
 {
+    public ScoreControl scoreControl;
+
     GameObject token;
     List<int> faceIndexes = new List<int> { 0, 1, 2, 3, 0, 1, 2, 3 };
     public static System.Random rnd = new System.Random();
     public int shuffleNum = 0;
     int[] visibleFaces = { -1, -2 };
 
-    public float gameTime = 60.0f; // ì´ˆê¸° ì‹œê°„ ì„¤ì •
+    public float gameTime = 60.0f; // ÃÊ±â ½Ã°£ ¼³Á¤
     bool gameFailed = false;
-
     public int totalMatches = 4;
     private int currentMatches = 0;
+    public Text resetCountText; // Ä«¿îÆ® Á¡¼ö Ç¥½Ã Text
+    public TMP_Text ClearText;
+    public TMP_Text ClearScore;
+    private int resetCount = 0; // Ä«¿îÆ® ¼¼±â
 
     void Start()
     {
-        // faceIndexes ë¦¬ìŠ¤íŠ¸ì˜ ì´ˆê¸° ê¸¸ì´ë¥¼ ì €ì¥
+        // faceIndexes ¸®½ºÆ®ÀÇ ÃÊ±â ±æÀÌ¸¦ ÀúÀå
         int originalLength = faceIndexes.Count;
 
-        // í† í°ì˜ ì´ˆê¸° y ìœ„ì¹˜
+        // ÅäÅ«ÀÇ ÃÊ±â y À§Ä¡
         float yPosition = 2.3f;
 
-        // í† í°ì˜ ì´ˆê¸° x ìœ„ì¹˜
+        // ÅäÅ«ÀÇ ÃÊ±â x À§Ä¡
         float xPosition = -2.2f;
 
-        // 3ë²ˆ ë°˜ë³µí•˜ì—¬ í† í°ì„ ìƒì„±í•˜ê³  ë°°ì¹˜
+        // 3¹ø ¹İº¹ÇÏ¿© ÅäÅ«À» »ı¼ºÇÏ°í ¹èÄ¡
         for (int i = 0; i < 7; i++)
         {
-            // faceIndexes ë¦¬ìŠ¤íŠ¸ì—ì„œ ëœë¤í•œ ì¸ë±ìŠ¤ë¥¼ ì–»ê¸° ìœ„í•œ ë‚œìˆ˜ ìƒì„±
+            // faceIndexes ¸®½ºÆ®¿¡¼­ ·£´ıÇÑ ÀÎµ¦½º¸¦ ¾ò±â À§ÇÑ ³­¼ö »ı¼º
             shuffleNum = rnd.Next(0, (faceIndexes.Count));
 
-            // ìƒˆë¡œìš´ í† í°ì„ ìƒì„±í•˜ê³  ìœ„ì¹˜ë¥¼ ì„¤ì •
+            // »õ·Î¿î ÅäÅ«À» »ı¼ºÇÏ°í À§Ä¡¸¦ ¼³Á¤
             var temp = Instantiate(token, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
 
-            // MainFront2 ìŠ¤í¬ë¦½íŠ¸ì˜ faceIndex ì†ì„±ì„ ì„¤ì •
+            // MainFront2 ½ºÅ©¸³Æ®ÀÇ faceIndex ¼Ó¼ºÀ» ¼³Á¤
             temp.GetComponent<MainFront2>().faceIndex = faceIndexes[shuffleNum];
 
-            // ì´ë¯¸ ì‚¬ìš©ëœ faceIndexë¥¼ ì œê±°í•˜ì—¬ ì¤‘ë³µ ì‚¬ìš©ì„ ë°©ì§€
+            // ÀÌ¹Ì »ç¿ëµÈ faceIndex¸¦ Á¦°ÅÇÏ¿© Áßº¹ »ç¿ëÀ» ¹æÁö
             faceIndexes.Remove(faceIndexes[shuffleNum]);
 
-            // xPosition ê°’ì„ ì¦ê°€í•˜ì—¬ í† í°ì„ ê°€ë¡œë¡œ ì´ë™
+            // xPosition °ªÀ» Áõ°¡ÇÏ¿© ÅäÅ«À» °¡·Î·Î ÀÌµ¿
             xPosition = xPosition + 4;
 
-            // originalLengthì˜ ì ˆë°˜ê¹Œì§€ ë°˜ë³µí•˜ë©´ y ìœ„ì¹˜ë¥¼ ë³€ê²½í•˜ì—¬ ì„¸ë¡œë¡œ ì´ë™
+            // originalLengthÀÇ Àı¹İ±îÁö ¹İº¹ÇÏ¸é y À§Ä¡¸¦ º¯°æÇÏ¿© ¼¼·Î·Î ÀÌµ¿
             if (i == (originalLength / 2 - 2))
             {
                 yPosition = -2.3f;
@@ -55,8 +61,10 @@ public class GameControl2 : MonoBehaviour
             }
         }
 
-        // ë§ˆì§€ë§‰ í† í°ì— ë‚¨ì€ faceIndexë¥¼ í• ë‹¹
+        // ¸¶Áö¸· ÅäÅ«¿¡ ³²Àº faceIndex¸¦ ÇÒ´ç
         token.GetComponent<MainFront2>().faceIndex = faceIndexes[0];
+        ClearText.gameObject.SetActive(false); // °ÔÀÓ ¿À¹ö ÅØ½ºÆ® ¼û±â±â
+        ClearScore.gameObject.SetActive(false); // ÃÖÁ¾ Á¡¼ö ÅØ½ºÆ® ¼û±â±â
     }
 
 
@@ -92,6 +100,13 @@ public class GameControl2 : MonoBehaviour
         {
             visibleFaces[1] = -2;
         }
+
+        if (scoreControl != null)
+        {
+            scoreControl.IncrementResetCount(); // scoreControl ÄÚµå¿¡ Á¡¼ö¸¦ Ãß°¡
+            scoreControl.IncrementFinalCount(); // final Á¡¼öµµ Ãß°¡
+            scoreControl.IncrementClearCount(); // Å¬¸®¾î Á¡¼ö Ãß°¡
+        }
     }
 
     public bool CheckMatch()
@@ -104,19 +119,28 @@ public class GameControl2 : MonoBehaviour
             success = true;
             currentMatches++;
 
-            // ëª¨ë“  ì¡°í•©ì´ ì¼ì¹˜í•˜ì˜€ëŠ”ì§€ í™•ì¸
+            // ¸ğµç Á¶ÇÕÀÌ ÀÏÄ¡ÇÏ¿´´ÂÁö È®ÀÎ
             if (currentMatches == totalMatches)
             {
-                MoveToNextStage();
+                ShowClearText();
             }
         }
         return success;
     }
 
-    private void MoveToNextStage()
+    /*private void MoveToNextStage()
     {
         SceneManager.LoadScene("Stage3");
+    }*/
+
+    private void ShowClearText() // °ÔÀÓ ¿Ï·á½Ã Å¬¸®¾î ¹®±¸ Ãâ·Â
+    {
+        ClearText.gameObject.SetActive(true); // °ÔÀÓ ¿À¹ö ÅØ½ºÆ®¸¦ Ãâ·Â
+        ClearScore.gameObject.SetActive(true); // ÃÖÁ¾ Á¡¼ö Ãâ·Â
+        Debug.Log("Game Ended");
+        Application.Quit();
     }
+
 
     private void Awake()
     {

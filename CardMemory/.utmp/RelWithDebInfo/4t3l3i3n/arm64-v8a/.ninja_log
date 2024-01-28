@@ -1,0 +1,11 @@
+# ninja log v5
+64	819	7281506700332599	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	2ac95b0a9b618f1a
+821	1736	7281506703484593	C:/Users/jimmy/Gamesprint_CardMemory_New/CardMemory/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4t3l3i3n/obj/arm64-v8a/libswappywrapper.so	8bfcdbbb3d4f3909
+14	2699	7281506718575587	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	8156a0c73142b714
+33	2703	7281506719137300	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	f1933d8a3c071128
+24	2735	7281506719440188	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	28d97b5557bebb67
+53	2819	7281506720161434	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	4279cb43fd99d54
+7	2898	7281506721110519	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	13f961b455095235
+43	2952	7281506721631808	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	edd80fa805d8b8fe
+0	3017	7281506722276210	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	1a2d6b762253bf39
+3017	3526	7281506725177573	C:/Users/jimmy/Gamesprint_CardMemory_New/CardMemory/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4t3l3i3n/obj/arm64-v8a/libgame.so	71fdc8745c708dc9

@@ -36,7 +36,7 @@ public class MainFront3 : MonoBehaviour
 
     private void Awake()
     {
-        //gameControl = GameObject.Find("GameControl3");
+        gameControl = GameObject.Find("GameControl3");
         control = gameControl.GetComponent<GameControl3>();
 
         if (control == null)

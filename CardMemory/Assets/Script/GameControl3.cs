@@ -1,45 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
+
 
 public class GameControl3 : MonoBehaviour
 {
+    public ScoreControl scoreControl;
+
     GameObject token;
-    List<int> faceIndexes = new List<int> { 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5 };
+    List<int> faceIndexes = new List<int> { 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 6, 6, 7, 7, 8, 8 };
     public static System.Random rnd = new System.Random();
     public int shuffleNum = 0;
     int[] visibleFaces = { -1, -2 };
 
+    public float gameTime = 60.0f; // ÃÊ±â ½Ã°£ ¼³Á¤
+    bool gameFailed = false;
+    public int totalMatches = 9;
+    private int currentMatches = 0;
+    public Text resetCountText;
+    public TMP_Text ClearText;
+    private int resetCount = 0;
+
     void Start()
     {
-        // faceIndexes ë¦¬ìŠ¤íŠ¸ì˜ ì´ˆê¸° ê¸¸ì´ë¥¼ ì €ì¥
+        // faceIndexes ¸®½ºÆ®ÀÇ ÃÊ±â ±æÀÌ¸¦ ÀúÀå
         int originalLength = faceIndexes.Count;
 
-        // í† í°ì˜ ì´ˆê¸° y ìœ„ì¹˜
+        // ÅäÅ«ÀÇ ÃÊ±â y À§Ä¡
         float yPosition = 2.3f;
 
-        // í† í°ì˜ ì´ˆê¸° x ìœ„ì¹˜
+        // ÅäÅ«ÀÇ ÃÊ±â x À§Ä¡
         float xPosition = -6.2f;
 
-        // 3ë²ˆ ë°˜ë³µí•˜ì—¬ í† í°ì„ ìƒì„±í•˜ê³  ë°°ì¹˜
+        // 3¹ø ¹İº¹ÇÏ¿© ÅäÅ«À» »ı¼ºÇÏ°í ¹èÄ¡
         for (int i = 0; i < 18; i++)
         {
-            // faceIndexes ë¦¬ìŠ¤íŠ¸ì—ì„œ ëœë¤í•œ ì¸ë±ìŠ¤ë¥¼ ì–»ê¸° ìœ„í•œ ë‚œìˆ˜ ìƒì„±
+            // faceIndexes ¸®½ºÆ®¿¡¼­ ·£´ıÇÑ ÀÎµ¦½º¸¦ ¾ò±â À§ÇÑ ³­¼ö »ı¼º
             shuffleNum = rnd.Next(0, (faceIndexes.Count));
 
-            // ìƒˆë¡œìš´ í† í°ì„ ìƒì„±í•˜ê³  ìœ„ì¹˜ë¥¼ ì„¤ì •
+            // »õ·Î¿î ÅäÅ«À» »ı¼ºÇÏ°í À§Ä¡¸¦ ¼³Á¤
             var temp = Instantiate(token, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
 
-            // MainFront1 ìŠ¤í¬ë¦½íŠ¸ì˜ faceIndex ì†ì„±ì„ ì„¤ì •
+            // MainFront3 ½ºÅ©¸³Æ®ÀÇ faceIndex ¼Ó¼ºÀ» ¼³Á¤
             temp.GetComponent<MainFront3>().faceIndex = faceIndexes[shuffleNum];
 
-            // ì´ë¯¸ ì‚¬ìš©ëœ faceIndexë¥¼ ì œê±°í•˜ì—¬ ì¤‘ë³µ ì‚¬ìš©ì„ ë°©ì§€
+            // ÀÌ¹Ì »ç¿ëµÈ faceIndex¸¦ Á¦°ÅÇÏ¿© Áßº¹ »ç¿ëÀ» ¹æÁö
             faceIndexes.Remove(faceIndexes[shuffleNum]);
 
-            // xPosition ê°’ì„ ì¦ê°€í•˜ì—¬ í† í°ì„ ê°€ë¡œë¡œ ì´ë™
+            // xPosition °ªÀ» Áõ°¡ÇÏ¿© ÅäÅ«À» °¡·Î·Î ÀÌµ¿
             xPosition = xPosition + 2.5f;
 
-            // originalLengthì˜ ì ˆë°˜ê¹Œì§€ ë°˜ë³µí•˜ë©´ y ìœ„ì¹˜ë¥¼ ë³€ê²½í•˜ì—¬ ì„¸ë¡œë¡œ ì´ë™
+            // originalLengthÀÇ Àı¹İ±îÁö ¹İº¹ÇÏ¸é y À§Ä¡¸¦ º¯°æÇÏ¿© ¼¼·Î·Î ÀÌµ¿
             if (i == 5)
             {
                 yPosition = 0f;
@@ -51,10 +65,29 @@ public class GameControl3 : MonoBehaviour
                 yPosition = -2.3f;
                 xPosition = -6.2f;
             }
+
+            
         }
 
-        // ë§ˆì§€ë§‰ í† í°ì— ë‚¨ì€ faceIndexë¥¼ í• ë‹¹
+        if (faceIndexes.Count < 2 * 9)
+        {
+            Debug.LogError("Not enough unique values in faceIndexes. Add more values. ");
+            Debug.LogError("Initial Count of faceIndexes: " + faceIndexes.Count);
+            return;
+        }
+
+        else if (faceIndexes.Count > 2 * 9)
+        {
+            Debug.LogError("Too much unique values in faceIndexes. Add more values. ");
+            Debug.LogError("Initial Count of faceIndexes: " + faceIndexes.Count);
+            return;
+        }
+
         token.GetComponent<MainFront3>().faceIndex = faceIndexes[0];
+
+
+        ClearText.gameObject.SetActive(false); // ÃÊ±â gameOverText°¡ Ãâ·ÂµÇÁö ¾Êµµ·Ï ¼³Á¤
+
     }
 
 
@@ -90,6 +123,12 @@ public class GameControl3 : MonoBehaviour
         {
             visibleFaces[1] = -2;
         }
+
+        if (scoreControl != null)
+        {
+            scoreControl.IncrementResetCount(); // scoreControl ÄÚµå¿¡ Á¡¼ö¸¦ Ãß°¡
+            scoreControl.IncrementFinalCount(); // final Á¡¼öµµ Ãß°¡
+        }
     }
 
     public bool CheckMatch()
@@ -100,15 +139,25 @@ public class GameControl3 : MonoBehaviour
             visibleFaces[0] = -1;
             visibleFaces[1] = -2;
             success = true;
-            // move to next stage
+            currentMatches++;
 
-            /*if (Scene.name == "Stage1")
+            // ¸ğµç Á¶ÇÕÀÌ ÀÏÄ¡ÇÏ¿´´ÂÁö È®ÀÎ
+            if (currentMatches == totalMatches)
             {
-                SceneManager.LoadScene("Stage2");
-            }*/
+                ShowClearText();
+            }
+
         }
         return success;
     }
+
+    private void ShowClearText() // °ÔÀÓ ¿Ï·á½Ã Å¬¸®¾î ¹®±¸ Ãâ·Â
+    {
+        ClearText.gameObject.SetActive(true); // °ÔÀÓ ¿À¹ö ÅØ½ºÆ®¸¦ Ãâ·Â
+
+        Debug.Log("Game Ended");
+    }
+
 
     private void Awake()
     {
