@@ -1,2 +1,2 @@
-# Gamesprint_CardMemory_New
- 카드메모리 새로
+# CardMemory 게임
+ 카드 두 장을 뒤집어 앞면이 서로 같은 짝을 찾아나가는 게임
